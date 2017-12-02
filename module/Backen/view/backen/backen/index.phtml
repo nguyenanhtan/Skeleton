@@ -1,0 +1,146 @@
+<h1>BACKEN - INDEX</h1>
+
+<!-- <p>
+    <a href="< //$this->url('backen', ['action' => 'add']) ?>">Add Irregular</a>
+</p> -->
+<!-- Button trigger modal -->
+<button id="btn-add-irregular" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+</button>
+<?php
+$this->headScript()->prependFile($this->basePath('bksource/myjs/irregular.js'));
+
+echo $this->form()->openTag($form);
+?>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Add Irregular Verb</h4>
+      </div>
+      <div class="modal-body">
+      <!-- <div id="alert-add-irregular" class="alert alert-success fade in">
+            <button type="button" class="close"  aria-hidden="true">&times;</button>
+            
+        </div -->
+        <!-- Begin Add Irregular Form -->
+        <?php
+
+        
+        
+        $id = $form->get('id');
+        $id->setAttribute("class",'form-control id-irr');
+        echo $this->formHidden($id);
+        $simple = $form->get('simple');
+        $simple->setAttribute("class",'form-control simple-irr');
+
+        $simple_past = $form->get('simple_past');
+        $simple_past->setAttribute("class",'form-control simple-past-irr');
+
+        $past_participle = $form->get('past_participle');
+        $past_participle->setAttribute("class",'form-control past-participle-irr');
+
+        $meaning = $form->get('meaning');
+        $meaning->setAttribute("class",'form-control meaning-irr');
+
+        $submit = $form->get('submit');
+        $submit->setAttribute("class",'btn btn-primary');
+        $submit->setAttribute("id",'submit-btn');
+        
+        //$form->setAttribute('action', $this->url('backen', ['action' => 'add']));
+        $form->prepare();
+
+        ?>
+
+        <div class='form-group'>
+            <?= $this->formLabel($simple)?>
+            <?= $this->formElement($simple)?>
+            <?= $this->formElementErrors()->render($simple,['class'=>'help-block'])?>
+        </div>
+
+        <div class='form-group'>
+            <?= $this->formLabel($simple_past)?>
+            <?= $this->formElement($simple_past)?>
+            <?= $this->formElementErrors()->render($simple_past,['class'=>'help-block'])?>
+        </div>
+
+        <div class='form-group'>
+            <?= $this->formLabel($past_participle)?>
+            <?= $this->formElement($past_participle)?>
+            <?= $this->formElementErrors()->render($past_participle,['class'=>'help-block'])?>
+        </div>
+
+        <div class='form-group'>
+            <?= $this->formLabel($meaning)?>
+            <?= $this->formElement($meaning)?>
+            <?= $this->formElementErrors()->render($meaning,['class'=>'help-block'])?>
+        </div>
+
+        
+
+        <!-- End Add Irregular Form -->
+        
+      </div>
+      <div class="modal-footer">
+          <span id = "alert-add-irregular" class="text-success">...</span>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <?php echo $this->formSubmit($form->get('submit'));?>
+        <input type="hidden" id="submit-url"/>
+        
+        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+<?php
+
+echo $this->form()->closeTag();
+?>
+<?php
+use Zend\Db\Resultset\Resultset;
+$set = new ResultSet();
+$set->initialize($this->info);
+ foreach ($set as $row) {
+        echo "<p>";
+        echo $row->id . PHP_EOL;
+        echo $row->title . PHP_EOL;
+        echo $row->content . PHP_EOL;
+        echo "</p>";
+    }
+
+?>
+<table class="table" id="irregular-tab">
+<tr>
+    <th>ID</th>
+    <th>Simple</th>
+    <th>Simple Past</th>
+    <th>Past Participle</th>
+    <th>Meaning</th>
+    <th>&nbsp;</th>
+</tr>
+<?php foreach ($irregulars as $irr) : ?>
+    <tr>
+        <td class="id-irr"><?= $this->escapeHtml($irr->id) ?></td>
+        <td class="simple-irr"><?= $this->escapeHtml($irr->simple) ?></td>
+        <td class="simple-past-irr"><?= $this->escapeHtml($irr->simple_past) ?></td>
+        <td class="past-participle-irr"><?= $this->escapeHtml($irr->past_participle) ?></td>
+        <td class="meaning-irr"><?= $this->escapeHtml($irr->meaning) ?></td>
+        
+        
+        <td>
+            <a class="edit-item" href="<?= $this->url('ajax', ['action' => 'editirregular', 'id' => $irr->id]) ?>" data-toggle="modal" data-target="#myModal">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                Edit
+            </a>
+            <a class="delete-item text-danger" href="<?= $this->url('ajax', ['action' => 'deleteirregular', 'id' => $irr->id]) ?>">
+                <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+                Delete
+            </a>
+        </td>
+    </tr>
+<?php endforeach; ?>
+</table>
+
+<!-- Modal -->

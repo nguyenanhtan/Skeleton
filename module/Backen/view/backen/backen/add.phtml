@@ -1,0 +1,71 @@
+<?=
+    $this->headScript()->prependFile($this->basePath('bksource/myjs/irregular.js'))
+?>
+<?php
+// module/Album/view/album/album/add.phtml:
+
+$title = 'Add new album';
+$this->headTitle($title);
+?>
+<h1><?= $this->escapeHtml($title) ?></h1>
+<div class="alert alert-success alert-dismissable fade in">
+	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+	<?php echo $this->sig;?>
+</div>
+<?php
+
+
+echo $this->form()->openTag($form);
+
+echo $this->formHidden($form->get('id'));
+$simple = $form->get('simple');
+$simple->setAttribute("class",'form-control');
+
+$simple_past = $form->get('simple_past');
+$simple_past->setAttribute("class",'form-control');
+
+$past_participle = $form->get('past_participle');
+$past_participle->setAttribute("class",'form-control');
+
+$meaning = $form->get('meaning');
+$meaning->setAttribute("class",'form-control');
+
+$submit = $form->get('submit');
+$submit->setAttribute("class",'btn btn-primary');
+$form->setAttribute('action', $this->url('backen', ['action' => 'add']));
+$form->prepare();
+
+?>
+
+<div class='form-group'>
+	<?= $this->formLabel($simple)?>
+	<?= $this->formElement($simple)?>
+	<?= $this->formElementErrors()->render($simple,['class'=>'help-block'])?>
+</div>
+
+<div class='form-group'>
+	<?= $this->formLabel($simple_past)?>
+	<?= $this->formElement($simple_past)?>
+	<?= $this->formElementErrors()->render($simple_past,['class'=>'help-block'])?>
+</div>
+
+<div class='form-group'>
+	<?= $this->formLabel($past_participle)?>
+	<?= $this->formElement($past_participle)?>
+	<?= $this->formElementErrors()->render($past_participle,['class'=>'help-block'])?>
+</div>
+
+<div class='form-group'>
+	<?= $this->formLabel($meaning)?>
+	<?= $this->formElement($meaning)?>
+	<?= $this->formElementErrors()->render($meaning,['class'=>'help-block'])?>
+</div>
+
+<?php
+/*echo $this->formRow($simple);
+echo $this->formRow($form->get('simple_past'));
+echo $this->formRow($form->get('past_participle'));
+echo $this->formRow($form->get('meaning'));*/
+echo $this->formSubmit($form->get('submit'));
+echo $this->form()->closeTag();
+?>

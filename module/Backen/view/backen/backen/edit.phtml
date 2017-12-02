@@ -1,0 +1,29 @@
+<h1>BACKEN - EDIT
+<p>
+    <a href="<?= $this->url('backen', ['action' => 'add']) ?>">Add Irregular</a>
+</p>
+
+<table class="table">
+<tr>
+    <th>ID</th>
+    <th>Phrasal Verb</th>
+    <th>Meaning</th>
+    <th>Example</th>
+    <th>&nbsp;</th>
+</tr>
+<?php foreach ($phrasal as $irr) : ?>
+    <tr>
+        <td><?= $this->escapeHtml($irr->id) ?></td>
+        <td><?= $this->escapeHtml($irr->phrasal_verb) ?></td>
+        <td><?= $this->escapeHtml($irr->meaning) ?></td>
+        <td><?= $this->escapeHtml($irr->example) ?></td>
+        
+        
+        
+        <td>
+            <a href="<?= $this->url('backen', ['action' => 'edit', 'id' => $irr->id]) ?>">Edit</a>
+            <a href="<?= $this->url('backen', ['action' => 'delete', 'id' => $irr->id]) ?>">Delete</a>
+        </td>
+    </tr>
+<?php endforeach; ?>
+</table>
